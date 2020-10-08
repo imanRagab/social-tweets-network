@@ -2,15 +2,19 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use 
-    HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable;
+
+    public static $relativeImagePath = "public/uploads/users/images";
+
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'image'
     ];
 
     /**
@@ -38,4 +42,49 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+    
+    public function getImageAttribute($value)
+    {
+        return Storage::url(self::$relativeImagePath . '/' . $value);
+    }
+
+    /**
+     * Save a new user and return the instance.
+     *
+     * @param  array  $attributes
+     * @return static
+     */
+    public static function create(array $attributes = [])
+    {
+        $imagePath = $attributes['image']->store(self::$relativeImagePath);
+        $imageParams = explode("/", $imagePath);
+        $attributes['image'] = end($imageParams);
+
+        $attributes['password'] = Hash::make($attributes['password']);
+        
+        $model = new self($attributes);
+        $model->save();
+
+        return $model;
+    }
 }
