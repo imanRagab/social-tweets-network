@@ -20,4 +20,5 @@ Route::group([
     'where' => ['locale' => 'en|ar']
 ], function ($router) {
     Route::post('register', 'API\RegisterController@register');
+    Route::post('login', 'API\AuthController@login',  ['name' => 'login']);
 });
