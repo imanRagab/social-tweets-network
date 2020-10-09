@@ -29,4 +29,13 @@ Route::group([
     'where' => ['locale' => 'en|ar']
 ], function ($router) {
     Route::post('tweets', 'API\TweetController@store');
+    Route::get('timeline', 'API\UserController@timeline');
+});
+
+Route::group([
+    'middleware' => ['api', 'jwt.verify'],
+    'prefix' => 'v1/{locale}/users',
+    'where' => ['locale' => 'en|ar']
+], function ($router) {
+    Route::post('{user}/follow', 'API\UserController@follow');
 });

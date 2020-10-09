@@ -77,6 +77,22 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Get all of the followers for the user.
+     */
+    public function followsInWhichIsFollowed()
+    {
+        return $this->hasMany('App\Follow');
+    }
+
+    /**
+     * Get all of the followed users for the user.
+     */
+    public function followsInWhichIsFollower()
+    {
+        return $this->hasMany('App\Follow', 'follower_id');
+    }
+
+    /**
      * Save a new user and return the instance.
      *
      * @param  array  $attributes
