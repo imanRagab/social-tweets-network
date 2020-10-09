@@ -14,6 +14,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => ['api'],
+    'prefix' => 'v1/{locale}/auth',
+    'where' => ['locale' => 'en|ar']
+], function ($router) {
+    Route::post('register', 'API\RegisterController@register');
+    Route::post('login', 'API\AuthController@login',  ['name' => 'login']);
+});
+
+Route::group([
+    'middleware' => ['api', 'jwt.verify'],
+    'prefix' => 'v1/{locale}/me',
+    'where' => ['locale' => 'en|ar']
+], function ($router) {
+    Route::post('tweets', 'API\TweetController@store');
+    Route::get('timeline', 'API\UserController@timeline');
+});
+
+Route::group([
+    'middleware' => ['api', 'jwt.verify'],
+    'prefix' => 'v1/{locale}/users',
+    'where' => ['locale' => 'en|ar']
+], function ($router) {
+    Route::post('{user}/follow', 'API\UserController@follow');
 });
