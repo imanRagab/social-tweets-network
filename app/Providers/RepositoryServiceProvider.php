@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repository\UserRepositoryInterface;
+use App\Repository\Interfaces\UserRepositoryInterface;
 use App\Repository\UserRepository;
-use App\Repository\TweetRepositoryInterface;
+use App\Repository\Interfaces\TweetRepositoryInterface;
 use App\Repository\TweetRepository;
 
 class RepositoryServiceProvider extends ServiceProvider

@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use App\Follow;
 use App\Helpers\Responses\ErrorResponse;
-use App\Repository\UserRepositoryInterface;
+use App\Repository\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
 class UserFollowsHelper
