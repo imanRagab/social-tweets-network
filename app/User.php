@@ -69,6 +69,14 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Get the tweets for the user.
+     */
+    public function tweets()
+    {
+        return $this->hasMany('App\Tweet');
+    }
+
+    /**
      * Save a new user and return the instance.
      *
      * @param  array  $attributes

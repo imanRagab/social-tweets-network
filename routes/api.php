@@ -16,9 +16,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'middleware' => ['api'],
-    'prefix' => '{locale}/auth',
+    'prefix' => 'v1/{locale}/auth',
     'where' => ['locale' => 'en|ar']
 ], function ($router) {
     Route::post('register', 'API\RegisterController@register');
     Route::post('login', 'API\AuthController@login',  ['name' => 'login']);
+});
+
+Route::group([
+    'middleware' => ['api', 'jwt.verify'],
+    'prefix' => 'v1/{locale}/me',
+    'where' => ['locale' => 'en|ar']
+], function ($router) {
+    Route::post('tweets', 'API\TweetController@store');
 });

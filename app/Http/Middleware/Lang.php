@@ -15,7 +15,7 @@ class Lang
      */
     public function handle($request, Closure $next)
     {
-        $locale = $request->segment(2) ?? \Config::get('app.locale');
+        $locale = $request->segment(3) ?? \Config::get('app.locale');
         app()->setLocale($locale);
         return $next($request);
     }
