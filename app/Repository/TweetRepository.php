@@ -1,12 +1,12 @@
 <?php   
 
-namespace App\Repository;   
+namespace App\Repository;
 
+use App\Repository\Interfaces\TweetRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use App\Tweet;
 
-class TweetRepository implements TweetRepositoryInterface 
+class TweetRepository implements TweetRepositoryInterface
 {    
     /**
     * @param $id

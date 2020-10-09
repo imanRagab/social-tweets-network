@@ -1,12 +1,13 @@
 <?php   
 
-namespace App\Repository;   
+namespace App\Repository;
 
+use App\Repository\Interfaces\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\User;
 
-class UserRepository implements UserRepositoryInterface 
+class UserRepository implements UserRepositoryInterface
 {    
     /**
     * @param $id

@@ -7,8 +7,8 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Responses\ErrorResponse as ResponsesErrorResponse;
 use App\Helpers\UserFollowsHelper;
-use App\Repository\UserRepositoryInterface;
-use App\Repository\TweetRepositoryInterface;
+use App\Repository\Interfaces\TweetRepositoryInterface;
+use App\Repository\Interfaces\UserRepositoryInterface;
 
 class UserController extends BaseController  
 {
